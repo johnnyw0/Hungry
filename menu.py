@@ -8,17 +8,13 @@ import jogo
 #Resolução da janela e background
 janela = Window(540,720)
 janela.set_title('Hungry')
-# bg = GameImage('png/space.png')
+bg = GameImage('png/bg.png')
 
 #Botões e título do jogo que estão no menu            
-# title = GameImage('png/title.png')
-# title.set_position(janela.width/2-title.width/2, 100)   #O título é espaçado de 100 pixels do começo da janela, o botão de jogar é espaçado 150 pixels do título
-# play = GameImage('png/play.png')                        #e os botões tem espaçamento de 100 pixels entre si
-# play.set_position(janela.width/2-play.width/2, 250)
-# dif = GameImage('png/dif.png')
-# dif.set_position(janela.width/2-dif.width/2, 350)
-# rank = GameImage('png/rank.png')
-# rank.set_position(janela.width/2-rank.width/2, 450)
+title = GameImage('png/logo.png')
+title.set_position(janela.width/2-title.width/2, 100)   #O título é espaçado de 100 pixels do começo da janela, o botão de jogar é espaçado 150 pixels do título
+play = GameImage('png/play.png')                        #e os botões tem espaçamento de 100 pixels entre si
+play.set_position(janela.width/2-play.width/2, janela.height-200)
 # exit = GameImage('png/exit.png')
 # exit.set_position(janela.width/2-exit.width/2, 550)
 
@@ -26,12 +22,9 @@ janela.set_title('Hungry')
 # #Destaque nos botões
 # d_exit = GameImage('png/dexit.png')
 # d_exit.set_position(janela.width/2-d_exit.width/2, 550)
-# ddif = GameImage('png/ddif.png')
-# ddif.set_position(janela.width/2-dif.width/2, 350)
-# dplay = GameImage('png/dplay.png')
-# dplay.set_position(janela.width/2-play.width/2, 250)
-# drank = GameImage('png/drank.png')
-# drank.set_position(janela.width/2-rank.width/2, 450)
+dplay = GameImage('png/d_play.png')
+dplay.set_position(janela.width/2-play.width/2, janela.height-200)
+
 
 
 #Mouse e teclado
@@ -45,12 +38,10 @@ i_menu = True
 #Gameloop
 while i_menu:
 
-    # bg.draw()
-    # dif.draw()
-    # rank.draw()
-    # title.draw()
+    bg.draw()
+    title.draw()
     # exit.draw()
-    # play.draw()
+    play.draw()
 
 
     #Destaque e efeitos dos botões
@@ -60,15 +51,14 @@ while i_menu:
     #     if mouse.is_button_pressed(1):
     #         janela.close()
 
-    # if mouse.is_over_object(rank):
-    #     drank.draw()
 
 
-    # if mouse.is_over_object(play):
-    #     dplay.draw()
 
-    if mouse.is_button_pressed(1):
-        jogo.jogo()
+    if mouse.is_over_object(play):
+        dplay.draw()
+
+        if mouse.is_button_pressed(1):
+            jogo.jogo()
 
 
     janela.update()
