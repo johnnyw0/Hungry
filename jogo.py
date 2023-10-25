@@ -7,7 +7,7 @@ from funcoes import*
 def jogo():
 
     #criando janela do jogo
-    janela = Window(540,720)
+    janela = Window(1280,720)
     janela.set_title('Hungry')
     #bg = GameImage("png/.png")
     out_menu = True
