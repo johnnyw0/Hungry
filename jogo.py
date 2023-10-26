@@ -1,13 +1,17 @@
-from PPlay.window import *
-from PPlay.sprite import *
-from PPlay.gameimage import *
-from PPlay.keyboard import *
-from PPlay.collision import *
+from PPlay.window import*
+from PPlay.sprite import*
+from PPlay.gameimage import*
+from PPlay.keyboard import*
+from funcoes import*
+
 
 def jogo():
-    janela = Window(800, 400)
-    janela.set_title("Hungry")
-    
+
+    #criando janela do jogo
+    janela = Window(800,400)
+    janela.set_title('Hungry')
+    out_menu = True
+
     teclado = janela.get_keyboard()
     
     fundo = GameImage("png/fundo.png")
@@ -35,9 +39,10 @@ def jogo():
     
     
     pontuacao = 0
-    
-    while True:
-        
+
+
+    while out_menu:
+
         fundo.x -= vel_fundo * janela.delta_time()
         if fundo.x <= -fundo.width: fundo.x += fundo.width
         
@@ -57,7 +62,7 @@ def jogo():
             vel_y = 0
             pulo = False
         
-        pontuacao += janela.delta_time()
+        pontuacao += janela.delta_time()/10
         
         
         fundo.draw()
@@ -67,7 +72,8 @@ def jogo():
         player.draw()
         
         janela.draw_text(f"{int(pontuacao*1000)}", 10, 10, size=20, color=[255,255,255], font_name="Arial")
-        
+
+
+
+        out_menu = voltar_menu()
         janela.update()
-        
-jogo()        

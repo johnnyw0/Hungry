@@ -6,15 +6,15 @@ import jogo
 
 
 #Resolução da janela e background
-janela = Window(1280,720)
+janela = Window(800,400)
 janela.set_title('Hungry')
 bg = GameImage('png/bg.png')
 
 #Botões e título do jogo que estão no menu            
 title = GameImage('png/logo.png')
-title.set_position(janela.width/2-title.width/2, 100)   #O título é espaçado de 100 pixels do começo da janela, o botão de jogar é espaçado 150 pixels do título
-play = GameImage('png/play.png')                        #e os botões tem espaçamento de 100 pixels entre si
-play.set_position(janela.width/2-play.width/2, janela.height-200)
+title.set_position(janela.width/2-title.width/2, 20)   
+play = GameImage('png/play.png')                      
+play.set_position(janela.width/2-play.width/2, janela.height/2 + 80)
 exit = GameImage('png/exit.png')
 exit.set_position(janela.width-exit.width, 0)
 
@@ -23,7 +23,7 @@ exit.set_position(janela.width-exit.width, 0)
 dexit = GameImage('png/dexit.png')
 dexit.set_position(janela.width-dexit.width, 0)
 dplay = GameImage('png/dplay.png')
-dplay.set_position(janela.width/2-play.width/2, janela.height-200)
+dplay.set_position(janela.width/2-play.width/2, janela.height/2+80)
 
 
 
@@ -35,7 +35,7 @@ teclado = Window.get_keyboard()
 i_menu = True
 
 
-#Gameloop
+#Menuloop
 while i_menu:
 
     bg.draw()
@@ -50,8 +50,6 @@ while i_menu:
 
         if mouse.is_button_pressed(1):
             janela.close()
-
-
 
 
     if mouse.is_over_object(play):
