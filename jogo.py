@@ -55,7 +55,7 @@ def jogo():
         
         if pulo:
             player.move_y(vel_y * janela.delta_time())
-            vel_y += 200
+            vel_y += 100
         
         if player.y > limite_inferior:
             player.y = limite_inferior
