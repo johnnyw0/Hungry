@@ -8,12 +8,15 @@ from funcoes import*
 def jogo():
 
     #criando janela do jogo
-    janela = Window(800,400)
+    janela = Window(1200,800)
     janela.set_title('Hungry')
     out_menu = True
 
     teclado = janela.get_keyboard()
     
+
+
+    #setup do fundo
     fundo = GameImage("png/fundo.png")
     fundo.x = janela.width/2 - fundo.width/2
     fundo.y = janela.height/2 - fundo.height/2
@@ -24,6 +27,8 @@ def jogo():
     
     vel_fundo = 300
     
+
+    #setup do player
     player = Sprite('png/player.png', 8)
     player.set_total_duration(500)
     
@@ -63,6 +68,7 @@ def jogo():
             pulo = False
         
         pontuacao += janela.delta_time()/10
+        
         
         
         fundo.draw()
