@@ -8,7 +8,7 @@ from funcoes import*
 def jogo():
 
     #criando janela do jogo
-    janela = Window(1200,800)
+    janela = Window(1200,700)
     janela.set_title('Hungry')
     out_menu = True
 
@@ -34,7 +34,7 @@ def jogo():
     
     player.x = 40
     
-    limite_inferior = janela.height - player.height - 40
+    limite_inferior = janela.height - player.height - 70
     player.y = limite_inferior
     
         
@@ -56,7 +56,7 @@ def jogo():
         
         if(teclado.key_pressed("space") and not pulo):
             pulo = True
-            vel_y = -2000
+            vel_y = -2200
         
         if pulo:
             player.move_y(vel_y * janela.delta_time())
