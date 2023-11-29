@@ -7,7 +7,7 @@ import jogo
 
 #Resolução da janela e background
 janela = Window(1200,700)
-janela.set_title('Hungry')
+janela.set_title('Rungry')
 bg = GameImage('png/bg.png')
 
 #Botões e título do jogo que estão no menu            
