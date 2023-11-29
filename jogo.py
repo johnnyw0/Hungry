@@ -31,18 +31,15 @@ def jogo():
     #setup do player
     player = Sprite('png/player.png', 8)
     player.set_total_duration(500)
-    
     player.x = 40
-    
     limite_inferior = janela.height - player.height - 70
     player.y = limite_inferior
-    
-        
     vel_y = 0    
-    
     pulo = False
     
     
+    cronometro_obstaculo = 0
+    limite_obst = 1000
     pontuacao = 0
 
 
@@ -67,7 +64,7 @@ def jogo():
             vel_y = 0
             pulo = False
         
-        pontuacao += janela.delta_time()/10
+        pontuacao += janela.delta_time()/100
         
         
         
