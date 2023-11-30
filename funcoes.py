@@ -4,10 +4,13 @@ from PPlay.gameimage import*
 from PPlay.keyboard import*
 from PPlay.collision import*
 from funcoes import*
+import random
 
 janela = Window(540,720)
 janela.set_title('Hungry')
 teclado = Window.get_keyboard()
+
+
 
 def voltar_menu():
     return False if teclado.key_pressed("esc") else True
@@ -25,8 +28,8 @@ def add_vida(vidas):
     vidas.append(vida)
     return vidas
 
-def add_obstaculo(obstaculos):
-    obstaculo = Sprite("png/pedra1.png")
+def add_obstaculo(obstaculos, select_obst):
+    obstaculo = random.choice(select_obst)
     obstaculo.x = 1200
     obstaculo.y = 630 - obstaculo.height
 

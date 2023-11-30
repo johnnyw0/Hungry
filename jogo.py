@@ -4,6 +4,7 @@ from PPlay.gameimage import*
 from PPlay.keyboard import*
 from PPlay.collision import*
 from funcoes import*
+from PPlay.sound import*
 
 
 def jogo():
@@ -37,13 +38,15 @@ def jogo():
     pulo = False
     
     
+    ##### PONTUACAO, VIDA E OBSTACULOS #####
+    obst1 = Sprite("png/cacto.png")
+    obst2 = Sprite("png/pedra1.png")
+    obst3 = Sprite("png/pedra2.png")
     pontuacao = 0
-
     vidas = []
-
+    select_obst = [obst1, obst2, obst3]
     for _ in range(3):
         vidas = add_vida(vidas)
-
     obstaculos = []
 
     ####
@@ -51,8 +54,16 @@ def jogo():
     ####
 
     
-    while out_menu:
+    ########## SOM ###########
+    grito1 = Sound("audio/grito1.ogg")
+    grito2 = Sound("audio/grito2.ogg")
+    gritos = [grito1, grito2]
+    gamebg = Sound("audio/game.ogg")
+    gamebg.set_volume(10)
+    Sound.play(gamebg)
 
+
+    while out_menu:
 
         ########## MOVIMENTO DO FUNDO ##########
         vel_fundo += 20 * janela.delta_time()
@@ -61,6 +72,7 @@ def jogo():
         if fundo.x <= -fundo.width: fundo.x += fundo.width
         
         fundo2.x = fundo.x + fundo.width
+
 
 
         
@@ -84,7 +96,7 @@ def jogo():
         pontuacao += vel_fundo * janela.delta_time()/100
         
         if(pontuacao >= teste_obstaculo):
-            obstaculos = add_obstaculo(obstaculos)
+            obstaculos = add_obstaculo(obstaculos, select_obst)
             teste_obstaculo += 100
         
         fundo.draw()
@@ -93,6 +105,8 @@ def jogo():
         player.update()
         player.draw()
 
+
+        ########### COLISAO E PERDA DE VIDA ############
         for obstaculo in obstaculos:
 
             obstaculo.x -= vel_fundo * janela.delta_time()
@@ -101,13 +115,15 @@ def jogo():
             if colisao(obstaculo, player):
                 obstaculos.remove(obstaculo)
                 vidas.remove(vidas[0])
+                grito_escolhido = random.choice(gritos)
+                Sound.play(grito_escolhido)
+                grito_escolhido.fadeout(1000)
 
         if len(vidas) == 0:
             break
 
         for vida in vidas: vida.draw()
 
-        ########### COLISAO E PERDA DE VIDA ############
 
         
         janela.draw_text(f"{int(pontuacao)}", 10, 10, size=20, color=[255,255,255], font_name="Arial")
