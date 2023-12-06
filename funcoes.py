@@ -35,4 +35,4 @@ def add_obstaculo(obstaculos):
     return obstaculos
         
 def colisao(obstaculo, player):
-    return True if Collision.collided(obstaculo, player) else False
+    return True if Collision.collided_perfect(obstaculo, player) else False
