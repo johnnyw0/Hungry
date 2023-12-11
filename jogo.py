@@ -15,6 +15,8 @@ def jogo():
     out_menu = True
 
     teclado = janela.get_keyboard()
+    clock = pygame.time.Clock()
+    temp = 0
     
 
 
@@ -25,7 +27,8 @@ def jogo():
     fundo2 = GameImage("png/fundo.png")
     fundo2.x = fundo.x + fundo.width
     fundo2.y = fundo.y
-    vel_fundo = 500
+    vel_fundo = 800
+    vel_obst = -800
     
 
     #setup do player
@@ -61,12 +64,12 @@ def jogo():
     gamebg = Sound("audio/game.ogg")
     gamebg.set_volume(10)
     Sound.play(gamebg)
+    gamebg.set_repeat(True)
 
 
     while out_menu:
 
         ########## MOVIMENTO DO FUNDO ##########
-        vel_fundo += 20 * janela.delta_time()
         
         fundo.x -= vel_fundo * janela.delta_time()
         if fundo.x <= -fundo.width: fundo.x += fundo.width
@@ -79,7 +82,7 @@ def jogo():
         ########### PULO ############
         if(teclado.key_pressed("space") and not pulo):
             pulo = True
-            vel_y = -2200
+            vel_y = -2800
         
         if pulo:
             player.move_y(vel_y * janela.delta_time())
@@ -89,7 +92,6 @@ def jogo():
             player.y = limite_inferior
             vel_y = 0
             pulo = False
-
         
 
         ########## PONTUACAO E OBSTACULO ############
@@ -109,7 +111,7 @@ def jogo():
         ########### COLISAO E PERDA DE VIDA ############
         for obstaculo in obstaculos:
 
-            obstaculo.x -= vel_fundo * janela.delta_time()
+            obstaculo.move_x(-vel_fundo * janela.delta_time())
             obstaculo.draw()
 
             if colisao(obstaculo, player):
@@ -120,6 +122,7 @@ def jogo():
                 grito_escolhido.fadeout(1000)
 
         if len(vidas) == 0:
+            gamebg.stop()
             break
 
         for vida in vidas: vida.draw()
@@ -129,6 +132,7 @@ def jogo():
         janela.draw_text(f"{int(pontuacao)}", 10, 10, size=20, color=[255,255,255], font_name="Arial")
 
 
+        vel_fundo += 5 * janela.delta_time()
 
         out_menu = voltar_menu()
         janela.update()
