@@ -24,7 +24,7 @@ def ordena_arq(arquivo):
     pessoas = []
     for linha in linhas:
         pessoa = linha.split()
-        pessoas.append((pessoa[0], int(pessoa[1])))
+        pessoas.append((pessoa[0], float(pessoa[1])))
 
     pessoas.sort(key=lambda pessoa: pessoa[1], reverse=True)
 

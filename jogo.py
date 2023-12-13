@@ -7,6 +7,7 @@ from funcoes import*
 from PPlay.sound import*
 
 
+
 def jogo():
 
     #criando janela do jogo
@@ -26,7 +27,7 @@ def jogo():
     fundo2.x = fundo.x + fundo.width
     fundo2.y = fundo.y
     vel_fundo = 800
-    vel_obst = -800
+
     
 
     #setup do player
@@ -37,6 +38,7 @@ def jogo():
     player.y = limite_inferior
     vel_y = 0    
     pulo = False
+    inv = False
     
     
     ##### PONTUACAO, VIDA E OBSTACULOS #####
@@ -49,6 +51,7 @@ def jogo():
     for _ in range(3):
         vidas = add_vida(vidas)
     obstaculos = []
+    cont_inv = 0
 
     ####
     teste_obstaculo = 50
@@ -59,10 +62,10 @@ def jogo():
     grito1 = Sound("audio/grito1.ogg")
     grito2 = Sound("audio/grito2.ogg")
     gritos = [grito1, grito2]
-    #gamebg = Sound("audio/gamebg.ogg")
-    #gamebg.set_volume(10)
-    #Sound.play(gamebg)
-    #gamebg.set_repeat(True)
+    gamebg = Sound("audio/gamebg.ogg")
+    gamebg.set_volume(50)
+    Sound.play(gamebg)
+    gamebg.set_repeat(True)
 
     janela.update()
     while out_menu:
@@ -111,20 +114,27 @@ def jogo():
             obstaculo.move_x(-vel_fundo * janela.delta_time())
             obstaculo.draw()
 
-            if colisao(obstaculo, player):
+            if colisao(obstaculo, player) and not inv:
                 obstaculos.remove(obstaculo)
                 vidas.remove(vidas[0])
                 grito_escolhido = random.choice(gritos)
                 Sound.play(grito_escolhido)
                 grito_escolhido.fadeout(1000)
 
-        if len(vidas) == 0:
-            gamebg.stop()
+                inv = True
 
+        if inv:
+            cont_inv += janela.delta_time()
+            if cont_inv >= 2:
+                cont_inv = 0
+                inv = False
+
+        if len(vidas) == 0:
+            print(type(pontuacao))
+            gamebg.stop()
             nome = input("Qual seu nome?: ")
             arq = open("ranking.txt", 'a')
-
-            arq.write(f"{nome}: {pontuacao}")
+            arq.write(f"{nome}: {pontuacao:.2f}")
             arq.write("\n")
             break
 
