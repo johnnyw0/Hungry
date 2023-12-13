@@ -16,6 +16,22 @@ def voltar_menu():
     return False if teclado.key_pressed("esc") else True
 
 
+
+def ordena_arq(arquivo):
+    arq = open(arquivo, 'r')
+
+    linhas = arq.readlines()
+    pessoas = []
+    for linha in linhas:
+        pessoa = linha.split()
+        pessoas.append((pessoa[0], int(pessoa[1])))
+
+    pessoas.sort(key=lambda pessoa: pessoa[1], reverse=True)
+
+    return pessoas
+
+
+
 def add_vida(vidas):
     vida = GameImage("png/heart.png")
     if(vidas):

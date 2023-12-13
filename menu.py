@@ -3,6 +3,7 @@ from PPlay.sprite import*
 from PPlay.gameimage import*
 from PPlay.mouse import*
 import jogo
+import ranking
 
 
 #Resolução da janela e background
@@ -11,21 +12,17 @@ janela.set_title('Rungry')
 bg = GameImage('png/bg.png')
 
 #Botões e título do jogo que estão no menu            
-title = GameImage('png/logo.png')
-title.set_position(janela.width/2-title.width/2, 20)   
 play = GameImage('png/play.png')                      
-play.set_position(janela.width/2-play.width/2, janela.height/2 + 80)
-exit = GameImage('png/exit.png')
-exit.set_position(janela.width-exit.width, 0)
+play.set_position(janela.width/2-play.width/2 + 5, janela.height/2 + 130)
+rank = GameImage('png/rank.png')
+rank.set_position(janela.width/2-rank.width/2 + 5, janela.height/2 + 200)
 
 
 # #Destaque nos botões
-dexit = GameImage('png/dexit.png')
-dexit.set_position(janela.width-dexit.width, 0)
 dplay = GameImage('png/dplay.png')
-dplay.set_position(janela.width/2-play.width/2, janela.height/2+80)
-
-
+dplay.set_position(janela.width/2-play.width/2 + 5, janela.height/2+ 130)
+drank = GameImage('png/drank.png')
+drank.set_position(janela.width/2-rank.width/2 + 5, janela.height/2 + 200)
 
 #Mouse e teclado
 mouse = Window.get_mouse()
@@ -39,24 +36,22 @@ i_menu = True
 while i_menu:
 
     bg.draw()
-    title.draw()
-    exit.draw()
     play.draw()
-
+    rank.draw()
 
     #Destaque e efeitos dos botões
-    if mouse.is_over_object(exit):
-        dexit.draw()
-
-        if mouse.is_button_pressed(1):
-            janela.close()
-
-
     if mouse.is_over_object(play):
         dplay.draw()
 
         if mouse.is_button_pressed(1):
             jogo.jogo()
+    
+    if mouse.is_over_object(rank):
+        drank.draw()
+
+        if mouse.is_button_pressed(1):
+            ranking.rank()
+
 
 
     janela.update()

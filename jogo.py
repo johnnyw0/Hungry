@@ -13,10 +13,8 @@ def jogo():
     janela = Window(1200,700)
     janela.set_title('Hungry')
     out_menu = True
-
     teclado = janela.get_keyboard()
-    clock = pygame.time.Clock()
-    temp = 0
+
     
 
 
@@ -61,16 +59,15 @@ def jogo():
     grito1 = Sound("audio/grito1.ogg")
     grito2 = Sound("audio/grito2.ogg")
     gritos = [grito1, grito2]
-    gamebg = Sound("audio/game.ogg")
-    gamebg.set_volume(10)
-    Sound.play(gamebg)
-    gamebg.set_repeat(True)
+    #gamebg = Sound("audio/gamebg.ogg")
+    #gamebg.set_volume(10)
+    #Sound.play(gamebg)
+    #gamebg.set_repeat(True)
 
-
+    janela.update()
     while out_menu:
 
         ########## MOVIMENTO DO FUNDO ##########
-        
         fundo.x -= vel_fundo * janela.delta_time()
         if fundo.x <= -fundo.width: fundo.x += fundo.width
         
@@ -123,13 +120,19 @@ def jogo():
 
         if len(vidas) == 0:
             gamebg.stop()
+
+            nome = input("Qual seu nome?: ")
+            arq = open("ranking.txt", 'a')
+
+            arq.write(f"{nome}: {pontuacao}")
+            arq.write("\n")
             break
 
         for vida in vidas: vida.draw()
 
 
         
-        janela.draw_text(f"{int(pontuacao)}", 10, 10, size=20, color=[255,255,255], font_name="Arial")
+        janela.draw_text(f"{int(pontuacao)}", 10, 10, size=28, color=[255,165,0], font_name='gemstoneregular')
 
 
         vel_fundo += 5 * janela.delta_time()
