@@ -15,6 +15,9 @@ teclado = Window.get_keyboard()
 def voltar_menu():
     return False if teclado.key_pressed("esc") else True
 
+def parar(musica):
+    musica.stop()
+
 
 
 def ordena_arq(arquivo):

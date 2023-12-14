@@ -74,10 +74,16 @@ def jogo():
     gamebg.set_volume(50)
     Sound.play(gamebg)
     gamebg.set_repeat(True)
+    collect = Sound("audio/Untitled.ogg")
 
     janela.update()
+
+
+    ############ GAMELOOP ##############
     while out_menu:
 
+        if teclado.key_pressed("esc"):
+            parar(gamebg)
         ########## MOVIMENTO DO FUNDO ##########
         fundo.x -= vel_fundo * janela.delta_time()
         if fundo.x <= -fundo.width: fundo.x += fundo.width
@@ -160,6 +166,7 @@ def jogo():
             coletavel.draw()
 
             if Collision.collided(player, coletavel) and len(vidas) < 3:
+                collect.play()
                 coletaveis.remove(coletavel)
                 vidas = add_vida(vidas)
         
