@@ -33,7 +33,8 @@ def jogo():
     #setup do player
     player = Sprite('png/player.png', 8)
     player.set_total_duration(500)
-    player.x = 40
+    posicao_meio = 160
+    player.x = posicao_meio - player.width/2
     limite_inferior = janela.height - player.height - 70
     player.y = limite_inferior
     vel_y = 0    
@@ -42,10 +43,12 @@ def jogo():
     
     
     ##### PONTUACAO, VIDA E OBSTACULOS #####
-    obst1 = Sprite("png/cacto.png")
-    obst2 = Sprite("png/pedra1.png")
-    obst3 = Sprite("png/pedra2.png")
+    obst1 = GameImage("png/cacto.png")
+    obst2 = GameImage("png/pedra1.png")
+    obst3 = GameImage("png/pedra2.png")
     pontuacao = 0
+    comecou = False
+    
     vidas = []
     select_obst = [obst1, obst2, obst3]
     for _ in range(3):
@@ -81,14 +84,22 @@ def jogo():
         
         ########### PULO ############
         if(teclado.key_pressed("space") and not pulo):
+            player = GameImage('png/player_pulo.png')
+            player.x = posicao_meio - player.width/2
+            player.y = limite_inferior
+
             pulo = True
-            vel_y = -2800
+            vel_y = -3 * vel_fundo
         
         if pulo:
-            player.move_y(vel_y * janela.delta_time())
-            vel_y += 10000 * janela.delta_time()
+            player.y += vel_y * janela.delta_time()
+            vel_y += janela.delta_time() * vel_fundo * 10
         
         if player.y > limite_inferior:
+            
+            player = Sprite('png/player.png', 8)
+            player.set_total_duration(500)
+            player.x = posicao_meio - player.width/2
             player.y = limite_inferior
             vel_y = 0
             pulo = False
@@ -99,22 +110,26 @@ def jogo():
         
         if(pontuacao >= teste_obstaculo):
             obstaculos = add_obstaculo(obstaculos, select_obst)
-            teste_obstaculo += 100
+            teste_obstaculo += 50
         
         fundo.draw()
         fundo2.draw()
         
-        player.update()
+        if not pulo: player.update()
         player.draw()
 
 
         ########### COLISAO E PERDA DE VIDA ############
         for obstaculo in obstaculos:
 
-            obstaculo.move_x(-vel_fundo * janela.delta_time())
+            obstaculo.x += (-vel_fundo * janela.delta_time())
+            if obstaculo.x + obstaculo.width <= 0:
+                obstaculos.remove(obstaculo)
+                continue
+            
             obstaculo.draw()
 
-            if colisao(obstaculo, player) and not inv:
+            if colisao(obstaculo, player, pulo) and not inv:
                 obstaculos.remove(obstaculo)
                 vidas.remove(vidas[0])
                 grito_escolhido = random.choice(gritos)
@@ -122,6 +137,10 @@ def jogo():
                 grito_escolhido.fadeout(1000)
 
                 inv = True
+                vel_fundo = 800
+
+
+            
 
         if inv:
             cont_inv += janela.delta_time()
@@ -139,8 +158,9 @@ def jogo():
             break
 
         for vida in vidas: vida.draw()
-
-
+    
+        if (not comecou and pontuacao > 0): pontuacao = 0
+        comecou = True
         
         janela.draw_text(f"{int(pontuacao)}", 10, 10, size=28, color=[255,165,0], font_name='gemstoneregular')
 

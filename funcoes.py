@@ -53,8 +53,14 @@ def add_obstaculo(obstaculos, select_obst):
 
     return obstaculos
         
-def colisao(obstaculo, player):
-    return True if Collision.collided(player, obstaculo) else False
+def colisao(obstaculo, player, pulo):
+    if pulo:
+        if (obstaculo.x < player.x + player.width) and (player.x <obstaculo.x + obstaculo.width):
+            if Collision.collided_perfect(player, obstaculo): return True
+        else: return False
+    else:
+        if (obstaculo.x < player.x + player.width) and (player.x <obstaculo.x + obstaculo.width): return True
+        else: return False
 
 #187
 #214
