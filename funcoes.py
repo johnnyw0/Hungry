@@ -37,7 +37,7 @@ def add_vida(vidas):
     if(vidas):
         vida.x = vidas[-1].x - 80
     else:
-        vida.x = 1050
+        vida.x = 1100
 
     vida.y = 25
 
@@ -61,6 +61,16 @@ def colisao(obstaculo, player, pulo):
     else:
         if (obstaculo.x < player.x + player.width) and (player.x <obstaculo.x + obstaculo.width): return True
         else: return False
+
+def add_coletavel(coletaveis):
+    coletavel = GameImage("png/heart.png")
+    coletavel.x = 1200
+    coletavel.y = 500
+
+    coletaveis.append(coletavel)
+    return coletaveis
+
+
 
 #187
 #214

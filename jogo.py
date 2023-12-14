@@ -50,14 +50,19 @@ def jogo():
     comecou = False
     
     vidas = []
-    select_obst = [obst1, obst2, obst3]
     for _ in range(3):
         vidas = add_vida(vidas)
+    
+    select_obst = [obst1, obst2, obst3]
     obstaculos = []
+
+    coletaveis = []
     cont_inv = 0
 
     ####
-    teste_obstaculo = 50
+    novo_obstaculo = 50
+
+    novo_coletavel = 325
     ####
 
     
@@ -108,9 +113,13 @@ def jogo():
         ########## PONTUACAO E OBSTACULO ############
         pontuacao += vel_fundo * janela.delta_time()/100
         
-        if(pontuacao >= teste_obstaculo):
+        if(pontuacao >= novo_obstaculo):
             obstaculos = add_obstaculo(obstaculos, select_obst)
-            teste_obstaculo += 50
+            novo_obstaculo += 50
+
+        if(pontuacao >= novo_coletavel):
+            coletaveis = add_coletavel(coletaveis)
+            novo_coletavel += 500
         
         fundo.draw()
         fundo2.draw()
@@ -139,7 +148,18 @@ def jogo():
                 inv = True
                 vel_fundo = 800
 
+        for coletavel in coletaveis:
+            coletavel.x += (-vel_fundo * janela.delta_time())
+            if coletavel.x + coletavel.width <= 0:
+                coletaveis.remove(coletavel)
+                continue
 
+            coletavel.draw()
+
+            if Collision.collided(player, coletavel) and len(vidas) < 3:
+                coletaveis.remove(coletavel)
+                vidas = add_vida(vidas)
+        
             
 
         if inv:
@@ -159,10 +179,12 @@ def jogo():
 
         for vida in vidas: vida.draw()
     
-        if (not comecou and pontuacao > 0): pontuacao = 0
+        if (not comecou and pontuacao > 0):
+            pontuacao = 0
+            vel_fundo = 800
         comecou = True
         
-        janela.draw_text(f"{int(pontuacao)}", 10, 10, size=28, color=[255,165,0], font_name='gemstoneregular')
+        janela.draw_text(f"{int(pontuacao)}", 45, 25, size=72, color=[255,165,0], font_name='gemstoneregular')
 
 
         vel_fundo += 5 * janela.delta_time()
