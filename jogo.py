@@ -108,6 +108,9 @@ def jogo():
             player.y = limite_inferior
             vel_y = 0
             pulo = False
+
+        if player.y < 0:
+            player.y = 0
         
 
         ########## PONTUACAO E OBSTACULO ############
