@@ -115,12 +115,12 @@ def jogo():
             vel_y = 0
             pulo = False
 
-        if player.y < 0:
-            player.y = 0
+        if player.y < 100:
+            player.y = 100
         
 
         ########## PONTUACAO E OBSTACULO ############
-        pontuacao += vel_fundo * janela.delta_time()/100
+        pontuacao += vel_fundo * janela.delta_time()/30
         
         if(pontuacao >= novo_obstaculo):
             obstaculos = add_obstaculo(obstaculos, select_obst)
@@ -197,7 +197,7 @@ def jogo():
         janela.draw_text(f"{int(pontuacao)}", 45, 25, size=72, color=[255,165,0], font_name='gemstoneregular')
 
 
-        vel_fundo += 5 * janela.delta_time()
+        vel_fundo += 10 * janela.delta_time()
 
         out_menu = voltar_menu()
         janela.update()
